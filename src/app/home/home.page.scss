@@ -7,14 +7,18 @@
 }
 
 .home-content::part(scroll) {
-  padding: 7.5rem 1rem 8.5rem;
+  padding: 7.5rem 1rem calc(6.5rem + env(safe-area-inset-bottom));
+  overflow: hidden;
 }
 
 .home-shell {
   display: grid;
+  grid-template-rows: minmax(0, 1fr);
   gap: 1.5rem;
   max-width: 64rem;
+  height: calc(100dvh - 7.5rem - 6.5rem - env(safe-area-inset-bottom));
   margin: 0 auto;
+  min-height: 0;
 }
 
 .hero-section {

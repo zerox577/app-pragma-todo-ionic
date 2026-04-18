@@ -2,19 +2,17 @@
 
 <ion-content [fullscreen]="true" class="home-content">
   <div class="home-shell">
-    <section class="hero-section">
-      <p class="hero-label">{{ currentSection.label }}</p>
-      <h1>{{ currentSection.greeting }}</h1>
-      <p>{{ currentSection.description }}</p>
-    </section>
+    @if (false) {
+      <section class="hero-section">
+        <p class="hero-label">{{ currentSection.label }}</p>
+        <h1>{{ currentSection.greeting }}</h1>
+        <p>{{ currentSection.description }}</p>
+      </section>
+    }
 
     @switch (activeTab) {
       @case ('hoy') {
-        <section class="content-card">
-          <span class="content-tag">Seccion activa</span>
-          <h2>Hoy</h2>
-          <h1>Hola tab 1</h1>
-        </section>
+        <app-today></app-today>
       }
       @case ('completadas') {
         <section class="content-card content-card--muted">

@@ -1,0 +1,96 @@
+<section class="today-section">
+  <div class="today-section__header">
+    <h1>Hoy</h1>
+    <p>3 tareas pendientes</p>
+  </div>
+
+  <div class="today-section__filters">
+    <button class="today-filter today-filter--active" type="button">
+      Todas
+    </button>
+    <button class="today-filter" type="button">Trabajo</button>
+    <button class="today-filter" type="button">Personal</button>
+  </div>
+
+  <div class="today-task-list">
+    <ion-card class="today-task-card">
+      <ion-card-content class="today-task-card__body">
+        <div class="today-task-card__check">
+          <ion-checkbox
+            class="today-task-card__checkbox"
+            aria-label="Marcar tarea Revision de diseño"
+          ></ion-checkbox>
+        </div>
+
+        <div class="today-task-card__content">
+          <h3>Revision de diseño</h3>
+          <span class="today-chip">Trabajo</span>
+        </div>
+
+        <button
+          class="today-task-card__delete"
+          type="button"
+          aria-label="Eliminar tarea"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="today-task-card">
+      <ion-card-content class="today-task-card__body">
+        <div class="today-task-card__check">
+          <ion-checkbox
+            class="today-task-card__checkbox"
+            aria-label="Marcar tarea Llamada con el equipo"
+          ></ion-checkbox>
+        </div>
+
+        <div class="today-task-card__content">
+          <h3>Llamada con el equipo</h3>
+          <span class="today-chip">Trabajo</span>
+        </div>
+
+        <button
+          class="today-task-card__delete"
+          type="button"
+          aria-label="Eliminar tarea"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="today-task-card">
+      <ion-card-content class="today-task-card__body">
+        <div class="today-task-card__check">
+          <ion-checkbox
+            class="today-task-card__checkbox"
+            aria-label="Marcar tarea Actualizar documentacion"
+          ></ion-checkbox>
+        </div>
+
+        <div class="today-task-card__content">
+          <h3>Actualizar documentacion</h3>
+          <span class="today-chip today-chip--personal">Personal</span>
+        </div>
+
+        <button
+          class="today-task-card__delete"
+          type="button"
+          aria-label="Eliminar tarea"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="today-section-btn">
+    <button class="today-add-button ion-activatable" type="button">
+      <span class="today-add-button__icon">+</span>
+      <span>Nueva tarea</span>
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+  </div>
+</section>
