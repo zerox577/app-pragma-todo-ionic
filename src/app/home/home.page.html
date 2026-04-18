@@ -1,0 +1,40 @@
+<app-header title="Tareas"></app-header>
+
+<ion-content [fullscreen]="true" class="home-content">
+  <div class="home-shell">
+    <section class="hero-section">
+      <p class="hero-label">{{ currentSection.label }}</p>
+      <h1>{{ currentSection.greeting }}</h1>
+      <p>{{ currentSection.description }}</p>
+    </section>
+
+    @switch (activeTab) {
+      @case ('hoy') {
+        <section class="content-card">
+          <span class="content-tag">Seccion activa</span>
+          <h2>Hoy</h2>
+          <h1>Hola tab 1</h1>
+        </section>
+      }
+      @case ('completadas') {
+        <section class="content-card content-card--muted">
+          <span class="content-tag">Seccion activa</span>
+          <h2>Completadas</h2>
+          <h1>Hola tab 2</h1>
+        </section>
+      }
+      @case ('categorias') {
+        <section class="content-card">
+          <span class="content-tag">Seccion activa</span>
+          <h2>Categorias</h2>
+          <h1>Hola tab 3</h1>
+        </section>
+      }
+    }
+  </div>
+</ion-content>
+
+<app-footer
+  [activeTab]="activeTab"
+  (tabChange)="onTabChange($event)"
+></app-footer>

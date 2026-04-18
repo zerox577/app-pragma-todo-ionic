@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.home-content {
+  --background: var(--app-color-surface);
+}
+
+.home-content::part(scroll) {
+  padding: 7.5rem 1rem 8.5rem;
+}
+
+.home-shell {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.hero-section {
+  padding: 1.75rem;
+  border-radius: var(--app-radius-xl);
+  background: var(--app-gradient-primary);
+  color: #ffffff;
+  box-shadow: var(--app-shadow-ambient);
+}
+
+.hero-label,
+.content-tag {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--app-radius-full);
+  background: rgba(255, 255, 255, 0.14);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-section h1,
+.content-card h1 {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.hero-section p:last-child,
+.content-card h2 {
+  margin: 0.75rem 0 0;
+}
+
+.content-card {
+  padding: 1.75rem;
+  border-radius: var(--app-radius-xl);
+  background: var(--app-color-surface-lowest);
+  color: var(--app-color-on-surface);
+  box-shadow: var(--app-shadow-ambient);
+}
+
+.content-card--muted {
+  background: var(--app-color-surface-variant);
+}
+
+.content-card h2 {
+  color: var(--app-color-on-surface-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@media (min-width: 48rem) {
+  .home-content::part(scroll) {
+    padding-inline: 1.5rem;
+  }
+}

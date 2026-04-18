@@ -1,0 +1,50 @@
+:host {
+  display: block;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.shared-footer {
+  background: transparent;
+  box-shadow: var(--app-shadow-ambient);
+}
+
+.shared-footer ion-tab-bar {
+  --background: rgba(100, 41, 205, 0.9);
+  --border: 0;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+  border-radius: 1.25rem 1.25rem 0 0;
+  backdrop-filter: blur(16px);
+}
+
+.shared-footer ion-tab-button {
+  --background: transparent;
+  --color: rgba(255, 255, 255, 0.72);
+  --color-selected: #ffffff;
+  min-height: 4.5rem;
+  border-radius: var(--app-radius-lg);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.shared-footer ion-tab-button.is-active {
+  transform: translateY(-2px);
+}
+
+.shared-footer ion-tab-button::part(native) {
+  border-top: 2px solid transparent;
+}
+
+.shared-footer ion-tab-button.tab-selected::part(native),
+.shared-footer ion-tab-button.is-active::part(native) {
+  border-top-color: var(--ion-color-primary);
+}
+
+.shared-footer ion-icon,
+.shared-footer ion-label {
+  color: inherit;
+}

@@ -1,0 +1,15 @@
+<ion-footer class="shared-footer">
+  <ion-tab-bar>
+    @for (tab of tabs; track tab.id) {
+      <ion-tab-button
+        [class.is-active]="tab.id === activeTab"
+        [selected]="tab.id === activeTab"
+        [attr.aria-selected]="tab.id === activeTab"
+        (click)="selectTab(tab.id)"
+      >
+        <ion-icon [name]="tab.icon"></ion-icon>
+        <ion-label>{{ tab.label }}</ion-label>
+      </ion-tab-button>
+    }
+  </ion-tab-bar>
+</ion-footer>
