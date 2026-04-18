@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { FooterComponent, HomeTab } from '../shared/footer/footer.component';
 import { HeaderComponent } from '../shared/header/header.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CompletedComponent } from './completed/completed.component';
 import { TodayComponent } from './today/today.component';
 
 interface HomeSection {
@@ -14,7 +16,14 @@ interface HomeSection {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonContent, HeaderComponent, FooterComponent, TodayComponent],
+  imports: [
+    IonContent,
+    HeaderComponent,
+    FooterComponent,
+    TodayComponent,
+    CompletedComponent,
+    CategoriesComponent,
+  ],
 })
 export class HomePage {
   public activeTab: HomeTab = 'hoy';

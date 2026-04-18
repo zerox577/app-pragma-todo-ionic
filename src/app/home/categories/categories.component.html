@@ -1,0 +1,193 @@
+<section class="categories-section">
+  <div class="categories-section__header">
+    <h1>Categorias</h1>
+  </div>
+
+  <div class="categories-section__list">
+    <ion-card class="category-card">
+      <ion-card-content class="category-card__body">
+        <span class="category-card__icon category-card__icon--work">
+          <ion-icon name="briefcase"></ion-icon>
+        </span>
+
+        <div class="category-card__content">
+          <h2>Trabajo</h2>
+        </div>
+
+        <div class="category-card__actions">
+          <button type="button" aria-label="Editar categoria Trabajo">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button type="button" aria-label="Eliminar categoria Trabajo">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="category-card">
+      <ion-card-content class="category-card__body">
+        <span class="category-card__icon category-card__icon--personal">
+          <ion-icon name="person"></ion-icon>
+        </span>
+
+        <div class="category-card__content">
+          <h2>Personal</h2>
+        </div>
+
+        <div class="category-card__actions">
+          <button type="button" aria-label="Editar categoria Personal">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button type="button" aria-label="Eliminar categoria Personal">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="category-card">
+      <ion-card-content class="category-card__body">
+        <span class="category-card__icon category-card__icon--urgent">
+          <ion-icon name="warning"></ion-icon>
+        </span>
+
+        <div class="category-card__content">
+          <h2>Urgente</h2>
+        </div>
+
+        <div class="category-card__actions">
+          <button type="button" aria-label="Editar categoria Urgente">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button type="button" aria-label="Eliminar categoria Urgente">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="category-card">
+      <ion-card-content class="category-card__body">
+        <span class="category-card__icon category-card__icon--ideas">
+          <ion-icon name="bulb"></ion-icon>
+        </span>
+
+        <div class="category-card__content">
+          <h2>Ideas</h2>
+        </div>
+
+        <div class="category-card__actions">
+          <button type="button" aria-label="Editar categoria Ideas">
+            <ion-icon name="create-outline"></ion-icon>
+          </button>
+          <button type="button" aria-label="Eliminar categoria Ideas">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="categories-section-btn">
+    <button
+      class="categories-add-button ion-activatable"
+      type="button"
+      (click)="openCreateCategoryModal()"
+    >
+      <span class="categories-add-button__icon">+</span>
+      <span>Nueva categoria</span>
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+  </div>
+</section>
+
+<ion-modal
+  cssClass="categories-create-modal"
+  [isOpen]="isCreateCategoryModalOpen"
+  [canDismiss]="true"
+  [backdropDismiss]="true"
+  (didDismiss)="closeCreateCategoryModal()"
+>
+  <ng-template>
+    <ion-content [fullscreen]="true" class="categories-modal-content">
+      <div class="categories-modal">
+        <div class="categories-modal__topbar">
+          <button
+            class="categories-modal__back"
+            type="button"
+            aria-label="Cerrar modal"
+            (click)="closeCreateCategoryModal()"
+          >
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+        </div>
+
+        <div class="categories-modal__content">
+          <div class="categories-modal__header">
+            <h2>Nueva Categoria</h2>
+          </div>
+
+          <div class="categories-modal__group">
+            <label class="categories-modal__label" for="category-name">
+              Nombre de la categoria
+            </label>
+            <ion-input
+              id="category-name"
+              class="categories-modal__input"
+              fill="outline"
+              placeholder="Ej. Trabajo, Personal..."
+            ></ion-input>
+          </div>
+
+          <div class="categories-modal__group">
+            <span class="categories-modal__label">Color distintivo</span>
+            <div class="categories-modal__colors">
+              <button class="categories-color categories-color--selected categories-color--red" type="button" aria-label="Seleccionar color rojo"></button>
+              <button class="categories-color categories-color--orange" type="button" aria-label="Seleccionar color naranja"></button>
+              <button class="categories-color categories-color--yellow" type="button" aria-label="Seleccionar color amarillo"></button>
+              <button class="categories-color categories-color--green" type="button" aria-label="Seleccionar color verde"></button>
+              <button class="categories-color categories-color--blue" type="button" aria-label="Seleccionar color azul"></button>
+              <button class="categories-color categories-color--purple" type="button" aria-label="Seleccionar color morado"></button>
+              <button class="categories-color categories-color--pink" type="button" aria-label="Seleccionar color rosa"></button>
+              <button class="categories-color categories-color--slate" type="button" aria-label="Seleccionar color gris oscuro"></button>
+            </div>
+          </div>
+
+          <div class="categories-modal__group">
+            <span class="categories-modal__label">Icono (Opcional)</span>
+            <div class="categories-modal__icons">
+              <button class="categories-icon categories-icon--active" type="button" aria-label="Seleccionar icono portafolio">
+                <ion-icon name="briefcase"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono casa">
+                <ion-icon name="home"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono estudio">
+                <ion-icon name="school"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono corazon">
+                <ion-icon name="heart"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono avion">
+                <ion-icon name="airplane"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono expandir">
+                <ion-icon name="expand"></ion-icon>
+              </button>
+              <button class="categories-icon" type="button" aria-label="Seleccionar icono carrito">
+                <ion-icon name="cart"></ion-icon>
+              </button>
+            </div>
+          </div>
+
+          <button class="categories-modal__save ion-activatable" type="button">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <span>Guardar Categoria</span>
+            <ion-ripple-effect></ion-ripple-effect>
+          </button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
