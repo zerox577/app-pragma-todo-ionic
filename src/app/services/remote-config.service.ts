@@ -84,7 +84,7 @@ export class RemoteConfigService {
 
     this.app = initializeApp(environment.firebase);
     this.remoteConfig = getRemoteConfig(this.app);
-    getAnalytics(this.app);
+    // getAnalytics(this.app);
 
     // Configura los tiempos de fetch definidos para la app.
     this.remoteConfig.settings = {
