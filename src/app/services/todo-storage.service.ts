@@ -150,14 +150,21 @@ export class TodoStorageService {
       taskCount: 0,
     };
 
-    const nextCategories: CategoryItem[] = [...this.categories(), category];
-    this.categories.set(this.withTaskCounts(nextCategories, this.tasks()));
-    this.persist();
+    const nextTasks: TaskItem[] = this.tasks();
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      [...this.categories(), category],
+      nextTasks,
+    );
+
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   public updateCategory(categoryId: string, draft: CategoryDraft): void {
     // Actualiza solo la categoria editada y conserva el resto sin cambios.
-    const nextCategories: CategoryItem[] = this.categories().map(
+    const nextTasks: TaskItem[] = this.tasks();
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      this.categories().map(
       (item: CategoryItem): CategoryItem =>
         item.id === categoryId
           ? {
@@ -167,10 +174,12 @@ export class TodoStorageService {
               icon: draft.icon,
             }
           : item,
+      ),
+      nextTasks,
     );
 
-    this.categories.set(this.withTaskCounts(nextCategories, this.tasks()));
-    this.persist();
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   public deleteCategory(categoryId: string): void {
@@ -185,7 +194,7 @@ export class TodoStorageService {
 
     this.tasks.set(nextTasks);
     this.categories.set(this.withTaskCounts(nextCategories, nextTasks));
-    this.persist();
+    this.persist(this.categories(), nextTasks);
   }
 
   public createTask(draft: TaskDraft): void {
@@ -199,9 +208,14 @@ export class TodoStorageService {
     };
 
     const nextTasks: TaskItem[] = [...this.tasks(), task];
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      this.categories(),
+      nextTasks,
+    );
+
     this.tasks.set(nextTasks);
-    this.categories.set(this.withTaskCounts(this.categories(), nextTasks));
-    this.persist();
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   public updateTaskCompletion(taskId: string, completed: boolean): void {
@@ -210,20 +224,28 @@ export class TodoStorageService {
       (task: TaskItem): TaskItem =>
         task.id === taskId ? { ...task, completed } : task,
     );
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      this.categories(),
+      nextTasks,
+    );
 
     this.tasks.set(nextTasks);
-    this.categories.set(this.withTaskCounts(this.categories(), nextTasks));
-    this.persist();
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   public deleteTask(taskId: string): void {
     const nextTasks: TaskItem[] = this.tasks().filter(
       (task: TaskItem): boolean => task.id !== taskId,
     );
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      this.categories(),
+      nextTasks,
+    );
 
     this.tasks.set(nextTasks);
-    this.categories.set(this.withTaskCounts(this.categories(), nextTasks));
-    this.persist();
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   public clearCompletedTasks(): void {
@@ -231,10 +253,14 @@ export class TodoStorageService {
     const nextTasks: TaskItem[] = this.tasks().filter(
       (task: TaskItem): boolean => !task.completed,
     );
+    const nextCategories: CategoryItem[] = this.withTaskCounts(
+      this.categories(),
+      nextTasks,
+    );
 
     this.tasks.set(nextTasks);
-    this.categories.set(this.withTaskCounts(this.categories(), nextTasks));
-    this.persist();
+    this.categories.set(nextCategories);
+    this.persist(nextCategories, nextTasks);
   }
 
   private loadState(): TodoStorageState {
@@ -286,29 +312,48 @@ export class TodoStorageService {
     tasks: TaskItem[],
   ): CategoryItem[] {
     // Calcula cuantas tareas activas tiene cada categoria para la UI.
+    const activeTaskCounts: Map<string, number> = this.getActiveTaskCounts(tasks);
+
     return categories.map(
       (item: CategoryItem): CategoryItem => ({
         ...item,
-        taskCount: tasks.filter(
-          (task: TaskItem): boolean =>
-            task.categoryId === item.id && !task.completed,
-        ).length,
+        taskCount: activeTaskCounts.get(item.id) ?? 0,
       }),
     );
   }
 
-  private persist(): void {
+  private persist(
+    categories: CategoryItem[] = this.categories(),
+    tasks: TaskItem[] = this.tasks(),
+  ): void {
     if (typeof localStorage === 'undefined') {
       return;
     }
 
     // Guarda siempre una version consistente del estado completo.
     const state: TodoStorageState = {
-      categories: this.withTaskCounts(this.categories(), this.tasks()),
-      tasks: this.tasks(),
+      categories,
+      tasks,
     };
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  private getActiveTaskCounts(tasks: TaskItem[]): Map<string, number> {
+    const activeTaskCounts: Map<string, number> = new Map<string, number>();
+
+    for (const task of tasks) {
+      if (task.completed || task.categoryId === null) {
+        continue;
+      }
+
+      activeTaskCounts.set(
+        task.categoryId,
+        (activeTaskCounts.get(task.categoryId) ?? 0) + 1,
+      );
+    }
+
+    return activeTaskCounts;
   }
 
   private generateId(prefix: 'category' | 'task' = 'category'): string {

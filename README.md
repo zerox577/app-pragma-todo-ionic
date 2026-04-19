@@ -289,7 +289,7 @@ Flujo actual:
 
 ### Hoy
 
-- Crear tarea desde `ion-alert`.
+- Crear tarea desde `ion-modal`.
 - Asociar categoria al momento de crear.
 - Filtrar tareas por categoria.
 - Marcar tareas como completadas.
@@ -320,6 +320,60 @@ Se persisten:
 - Tipado explicito en propiedades, funciones y modelos.
 - `signal()` para estado reactivo simple.
 - Componentes hijos por seccion para mantener `Home` limpio.
+
+## Estrategia de rendimiento
+
+La aplicacion sigue una estrategia de optimizacion enfocada en tres frentes:
+
+- reducir el trabajo de render inicial
+- evitar calculos repetidos cuando crece la lista de tareas
+- minimizar trabajo extra de serializacion y recalculo en memoria
+
+### Mejoras aplicadas
+
+#### Carga inicial
+
+- `Home` carga primero la vista `Hoy`.
+- `Completadas` y `Categorias` se renderizan bajo demanda con `@defer`.
+- Esto reduce el trabajo inicial del primer render y mueve partes no criticas a chunks diferidos.
+
+#### Deteccion de cambios
+
+- Se usa `ChangeDetectionStrategy.OnPush` en componentes principales.
+- Esto evita revisiones innecesarias cuando los `@Input()`, eventos o `signals` no cambian.
+- En pantallas con varias secciones y listas, ayuda a bajar trabajo de CPU en cada actualizacion.
+
+#### Manejo de muchas tareas
+
+- `TodayComponent` precalcula un view-model para la template con `visibleTaskCards`.
+- Tambien usa un `Map` de categorias para evitar hacer `find()` por cada tarea renderizada.
+- Se mantiene una lista derivada de tareas pendientes para reutilizarla en filtros y contadores.
+
+#### Persistencia y memoria
+
+- `TodoStorageService` recalcula los conteos por categoria en una sola pasada usando un `Map`.
+- La persistencia evita recomputar y reserializar estructuras mas veces de lo necesario.
+- Esto reduce objetos temporales y trabajo repetido cuando se crean, editan o completan tareas.
+
+### Impacto esperado
+
+- inicio mas ligero de la app
+- mejor respuesta cuando aumenta la cantidad de tareas
+- menor trabajo de render por cambio de estado
+- menor costo al persistir datos en `localStorage`
+
+### Mejoras futuras recomendadas
+
+- agregar paginacion o virtualizacion si la lista llega a cientos o miles de tareas
+- mover estilos compartidos a capas globales para reducir el peso de algunos componentes
+- crear indices derivados adicionales si se agregan mas filtros, busquedas o agrupaciones
+- diferir o agrupar operaciones de persistencia si en el futuro hay actualizaciones masivas
+
+### Criterio usado
+
+- primero optimizaciones de bajo riesgo y alta ganancia
+- despues optimizaciones estructurales solo si el volumen de datos realmente lo exige
+- mantener la app simple mientras la experiencia siga siendo fluida
 
 ## Notas
 

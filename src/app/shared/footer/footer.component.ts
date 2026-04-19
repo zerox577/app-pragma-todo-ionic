@@ -1,4 +1,13 @@
-import { Component, computed, EventEmitter, inject, Input, Output, Signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  Signal,
+} from '@angular/core';
 import {
   IonFooter,
   IonIcon,
@@ -27,6 +36,7 @@ interface FooterTabItem {
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonFooter, IonTabBar, IonTabButton, IonIcon, IonLabel],
 })
 export class FooterComponent {

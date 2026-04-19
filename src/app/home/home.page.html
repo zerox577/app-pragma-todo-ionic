@@ -10,10 +10,14 @@
         <app-today></app-today>
       }
       @case ('completadas') {
-        <app-completed></app-completed>
+        @defer (when activeTab === 'completadas') {
+          <app-completed></app-completed>
+        }
       }
       @case ('categorias') {
-        <app-categories></app-categories>
+        @defer (when activeTab === 'categorias') {
+          <app-categories></app-categories>
+        }
       }
     }
   </div>

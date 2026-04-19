@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Signal } from '@angular/core';
 import { IonCard, IonCardContent, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { checkmarkOutline, trashOutline } from 'ionicons/icons';
@@ -8,6 +8,7 @@ import { TaskItem, TodoStorageService } from '../../services/todo-storage.servic
   selector: 'app-completed',
   templateUrl: './completed.component.html',
   styleUrls: ['./completed.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonCard, IonCardContent, IonIcon],
 })
 export class CompletedComponent {

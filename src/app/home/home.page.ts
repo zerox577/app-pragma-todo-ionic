@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonContent, IonRefresherContent, RefresherCustomEvent, IonRefresher } from '@ionic/angular/standalone';
 import { FooterComponent, HomeTab } from '../shared/footer/footer.component';
 import { HeaderComponent } from '../shared/header/header.component';
@@ -11,6 +11,7 @@ import { RemoteConfigService } from '../services/remote-config.service';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonContent,
     IonRefresherContent,

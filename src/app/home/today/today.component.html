@@ -26,8 +26,8 @@
   </div>
 
   <div class="today-task-list">
-    @if (visibleTasks().length > 0) {
-      @for (task of visibleTasks(); track task.id) {
+    @if (visibleTaskCards().length > 0) {
+      @for (task of visibleTaskCards(); track task.id) {
         <ion-card class="today-task-card">
           <ion-card-content class="today-task-card__body">
             <div class="today-task-card__check">
@@ -41,8 +41,8 @@
 
             <div class="today-task-card__content">
               <h3>{{ task.title }}</h3>
-              <span [class]="getCategoryChipClass(task.categoryId)">
-                {{ getCategoryName(task.categoryId) }}
+              <span [class]="task.categoryChipClass">
+                {{ task.categoryLabel }}
               </span>
             </div>
 
