@@ -7,7 +7,8 @@
 }
 
 .home-content::part(scroll) {
-  padding: 7.5rem 1rem calc(6.5rem + env(safe-area-inset-bottom));
+  /* Reserva un poco mas de espacio para que el CTA inferior no quede bajo el footer fijo. */
+  padding: 7.5rem 1rem calc(7.5rem + env(safe-area-inset-bottom));
   /*overflow: hidden;*/
 }
 
@@ -16,7 +17,7 @@
   grid-template-rows: minmax(0, 1fr);
   gap: 1.5rem;
   max-width: 64rem;
-  height: calc(100dvh - 7.5rem - 6.5rem - env(safe-area-inset-bottom));
+  height: calc(100dvh - 7.5rem - 7.5rem - env(safe-area-inset-bottom));
   margin: 0 auto;
   min-height: 0;
 }

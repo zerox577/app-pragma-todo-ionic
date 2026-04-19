@@ -47,6 +47,17 @@ ion-modal.categories-create-modal::part(content) {
   background: #f9f9f9;
 }
 
+ion-modal.today-create-modal {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
+  --box-shadow: none;
+}
+
+ion-modal.today-create-modal::part(content) {
+  background: #f9f9f9;
+}
+
 ion-alert.today-task-alert {
   --background: #f9f9f9;
   --color: #1b1b1b;

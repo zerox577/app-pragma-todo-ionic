@@ -1,14 +1,17 @@
 import { Component, computed, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   IonCard,
   IonCardContent,
   IonCheckbox,
+  IonContent,
   IonIcon,
+  IonInput,
+  IonModal,
   IonRippleEffect,
 } from '@ionic/angular/standalone';
-import { AlertController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { trashOutline } from 'ionicons/icons';
+import { arrowBack, checkmarkCircle, trashOutline } from 'ionicons/icons';
 import { CategoryItem, TaskItem, TodoStorageService } from '../../services/todo-storage.service';
 
 interface TaskCheckboxChangeEvent {
@@ -23,10 +26,19 @@ type TodayFilterId = 'all' | string;
   selector: 'app-today',
   templateUrl: './today.component.html',
   styleUrls: ['./today.component.scss'],
-  imports: [IonCard, IonCardContent, IonCheckbox, IonIcon, IonRippleEffect],
+  imports: [
+    FormsModule,
+    IonCard,
+    IonCardContent,
+    IonCheckbox,
+    IonContent,
+    IonIcon,
+    IonInput,
+    IonModal,
+    IonRippleEffect,
+  ],
 })
 export class TodayComponent {
-  private readonly alertController: AlertController = inject(AlertController);
   private readonly todoStorageService: TodoStorageService =
     inject(TodoStorageService);
 
@@ -55,100 +67,46 @@ export class TodayComponent {
         .tasks()
         .filter((task: TaskItem): boolean => !task.completed).length,
   );
+  // Estado local del modal para crear tareas en Android/iOS sin depender de alerts nativos.
+  public isCreateTaskModalOpen: boolean = false;
+  public taskTitle: string = '';
+  public selectedTaskCategoryId: string | null = null;
 
   public constructor() {
-    addIcons({ trashOutline });
+    addIcons({ arrowBack, checkmarkCircle, trashOutline });
   }
 
   public selectFilter(filterId: TodayFilterId): void {
     this.selectedFilterId.set(filterId);
   }
 
-  public async openCreateTaskAlert(): Promise<void> {
-    // El alta de tareas se divide en dos pasos: titulo y categoria.
-    let taskTitle: string = '';
+  public openCreateTaskAlert(): void {
+    // Conserva el nombre del metodo, pero ahora abre un modal propio mas confiable en APK.
+    this.resetTaskForm();
+    this.isCreateTaskModalOpen = true;
+  }
 
-    const titleAlert = await this.alertController.create({
-      cssClass: 'today-task-alert today-task-alert--text',
-      header: 'Nueva tarea',
-      inputs: [
-        {
-          name: 'title',
-          type: 'text',
-          placeholder: 'Nombre de la tarea',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Siguiente',
-          role: 'confirm',
-          handler: (value: { title?: string }): boolean => {
-            taskTitle = value.title?.trim() ?? '';
-            return taskTitle.length > 0;
-          },
-        },
-      ],
-    });
+  public closeCreateTaskModal(): void {
+    this.isCreateTaskModalOpen = false;
+    this.resetTaskForm();
+  }
 
-    await titleAlert.present();
-    const titleResult = await titleAlert.onDidDismiss();
-    if (titleResult.role !== 'confirm') {
-      return;
-    }
-    if (taskTitle.length === 0) {
-      return;
-    }
+  public selectTaskCategory(categoryId: string | null): void {
+    this.selectedTaskCategoryId = categoryId;
+  }
 
-    const availableCategories: CategoryItem[] = this.categories();
-    if (availableCategories.length === 0) {
-      this.todoStorageService.createTask({
-        title: taskTitle,
-        categoryId: null,
-      });
-      return;
-    }
-
-    let selectedCategoryId: string | null = availableCategories[0]?.id ?? null;
-
-    const categoryAlert = await this.alertController.create({
-      cssClass: 'today-task-alert today-task-alert--category',
-      header: 'Categoria',
-      inputs: availableCategories.map((category: CategoryItem, index: number) => ({
-        type: 'radio',
-        label: category.name,
-        value: category.id,
-        checked: index === 0,
-      })),
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Guardar',
-          role: 'confirm',
-          handler: (value: string): boolean => {
-            selectedCategoryId = value;
-            return true;
-          },
-        },
-      ],
-    });
-
-    await categoryAlert.present();
-    const categoryResult = await categoryAlert.onDidDismiss();
-    if (categoryResult.role !== 'confirm') {
+  public saveTask(): void {
+    const trimmedTitle: string = this.taskTitle.trim();
+    if (trimmedTitle.length === 0) {
       return;
     }
 
     this.todoStorageService.createTask({
-      title: taskTitle,
-      categoryId: selectedCategoryId,
+      title: trimmedTitle,
+      categoryId: this.selectedTaskCategoryId,
     });
+
+    this.closeCreateTaskModal();
   }
 
   public toggleTaskCompletion(
@@ -184,5 +142,10 @@ export class TodayComponent {
     return category === undefined
       ? 'today-chip today-chip--slate'
       : `today-chip today-chip--${category.color}`;
+  }
+
+  private resetTaskForm(): void {
+    this.taskTitle = '';
+    this.selectedTaskCategoryId = this.categories()[0]?.id ?? null;
   }
 }

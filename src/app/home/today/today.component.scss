@@ -218,11 +218,13 @@
   font-size: 1.05rem;
   font-weight: 700;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 .today-section-btn {
   position: sticky;
   bottom: 0;
+  z-index: 1;
   padding-top: 0.35rem;
   background: linear-gradient(180deg, rgba(249, 249, 249, 0) 0%, #f9f9f9 30%);
 }
@@ -231,4 +233,122 @@
   font-size: 2.35rem;
   line-height: 1;
   font-weight: 300;
+}
+
+.today-modal {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: calc(env(safe-area-inset-top) + 0.5rem) 1rem
+    calc(1rem + env(safe-area-inset-bottom));
+  background: var(--app-color-surface);
+}
+
+.today-modal-content {
+  --background: var(--app-color-surface);
+}
+
+.today-modal__topbar {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+}
+
+.today-modal__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ion-color-primary);
+}
+
+.today-modal__back ion-icon {
+  font-size: 1.55rem;
+}
+
+.today-modal__body {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.today-modal__header h2 {
+  margin: 0;
+  color: var(--ion-color-primary);
+  font-size: clamp(2.5rem, 11vw, 3.8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.07em;
+}
+
+.today-modal__group {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.today-modal__label {
+  color: rgba(53, 60, 79, 0.8);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.today-modal__input {
+  --background: rgba(255, 255, 255, 0.52);
+  --border-radius: 1rem;
+  --border-color: transparent;
+  --highlight-color-focused: transparent;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  color: var(--app-color-on-surface);
+}
+
+.today-modal__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.today-modal__category {
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(53, 60, 79, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.52);
+  color: var(--app-color-on-surface);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.today-modal__category--active {
+  border-color: transparent;
+  background: linear-gradient(135deg, #5c23cc 0%, #7a39eb 100%);
+  color: #ffffff;
+}
+
+.today-modal__save {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 3.4rem;
+  margin-top: 0.5rem;
+  border: 0;
+  border-radius: 1.4rem;
+  background: linear-gradient(135deg, #5c23cc 0%, #7a39eb 100%);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.today-modal__save:disabled {
+  opacity: 0.55;
+}
+
+.today-modal__save ion-icon {
+  font-size: 1.2rem;
 }
