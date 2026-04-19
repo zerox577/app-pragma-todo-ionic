@@ -146,10 +146,14 @@
   font-weight: 500;
 }
 
-.today-chip--personal {
-  background: #ececec;
-  color: #53596a;
-}
+.today-chip--red { background: #f6d4d0; color: #b3261e; }
+.today-chip--orange { background: #ffe2cc; color: #c35600; }
+.today-chip--yellow { background: #fbe8a9; color: #8b6a00; }
+.today-chip--green { background: #d6f4de; color: #1d8d43; }
+.today-chip--blue { background: #d9e0ff; color: #315ebc; }
+.today-chip--purple { background: #ead9ff; color: #6b27d1; }
+.today-chip--pink { background: #ffd6eb; color: #b52471; }
+.today-chip--slate { background: #ececec; color: #53596a; }
 
 .today-task-card__delete {
   display: inline-flex;
@@ -179,6 +183,23 @@
 
 .today-task-card__delete ion-icon {
   font-size: 1.7rem;
+}
+
+.today-task-list__empty {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  padding: 1rem;
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.42);
+  color: var(--app-color-on-surface-muted);
+  text-align: center;
+}
+
+.today-task-list__empty p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 .today-add-button {

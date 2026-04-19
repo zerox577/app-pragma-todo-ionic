@@ -59,22 +59,14 @@
   flex-shrink: 0;
 }
 
-.category-card__icon--work {
-  background: #dfe3ff;
-}
-
-.category-card__icon--personal {
-  background: #ead9ff;
-}
-
-.category-card__icon--urgent {
-  background: #f6d4d0;
-  color: #b3261e;
-}
-
-.category-card__icon--ideas {
-  background: #ececec;
-}
+.category-card__icon--red { background: #f6d4d0; color: #b3261e; }
+.category-card__icon--orange { background: #ffe2cc; color: #c35600; }
+.category-card__icon--yellow { background: #fbe8a9; color: #8b6a00; }
+.category-card__icon--green { background: #d6f4de; color: #1d8d43; }
+.category-card__icon--blue { background: #dfe3ff; color: #315ebc; }
+.category-card__icon--purple { background: #ead9ff; color: #6b27d1; }
+.category-card__icon--pink { background: #ffd6eb; color: #b52471; }
+.category-card__icon--slate { background: #ececec; color: #374055; }
 
 .category-card__content h2 {
   margin: 0;

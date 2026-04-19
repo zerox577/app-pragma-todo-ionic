@@ -1,15 +1,10 @@
 <app-header title="Tareas"></app-header>
 
 <ion-content [fullscreen]="true" class="home-content">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="home-shell">
-    @if (false) {
-      <section class="hero-section">
-        <p class="hero-label">{{ currentSection.label }}</p>
-        <h1>{{ currentSection.greeting }}</h1>
-        <p>{{ currentSection.description }}</p>
-      </section>
-    }
-
     @switch (activeTab) {
       @case ('hoy') {
         <app-today></app-today>

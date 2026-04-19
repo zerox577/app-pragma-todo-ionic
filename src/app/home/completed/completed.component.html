@@ -4,33 +4,35 @@
   </div>
 
   <div class="completed-section__summary">
-    <p>2 tareas finalizadas hoy</p>
+    <p>{{ getCompletedTaskLabel(completedTasks().length) }}</p>
 
-    <button class="completed-section__clear" type="button">
+    <button
+      class="completed-section__clear"
+      type="button"
+      (click)="clearCompletedTasks()"
+    >
       <ion-icon name="trash-outline"></ion-icon>
       <span>Limpiar lista</span>
     </button>
   </div>
 
   <div class="completed-section__list">
-    <ion-card class="completed-task-card">
-      <ion-card-content class="completed-task-card__body">
-        <span class="completed-task-card__check" aria-hidden="true">
-          <ion-icon name="checkmark-outline"></ion-icon>
-        </span>
+    @if (completedTasks().length > 0) {
+      @for (task of completedTasks(); track task.id) {
+        <ion-card class="completed-task-card">
+          <ion-card-content class="completed-task-card__body">
+            <span class="completed-task-card__check" aria-hidden="true">
+              <ion-icon name="checkmark-outline"></ion-icon>
+            </span>
 
-        <p>Enviar reporte semanal</p>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="completed-task-card">
-      <ion-card-content class="completed-task-card__body">
-        <span class="completed-task-card__check" aria-hidden="true">
-          <ion-icon name="checkmark-outline"></ion-icon>
-        </span>
-
-        <p>Configurar entorno de desarrollo</p>
-      </ion-card-content>
-    </ion-card>
+            <p>{{ task.title }}</p>
+          </ion-card-content>
+        </ion-card>
+      }
+    } @else {
+      <div class="completed-section__empty">
+        <p>No hay tareas completadas.</p>
+      </div>
+    }
   </div>
 </section>

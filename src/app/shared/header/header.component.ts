@@ -8,5 +8,6 @@ import { IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
   imports: [IonHeader, IonToolbar, IonTitle],
 })
 export class HeaderComponent {
+  // Texto que se muestra como encabezado principal de la pantalla.
   @Input({ required: true }) public title!: string;
 }

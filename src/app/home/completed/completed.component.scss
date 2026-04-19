@@ -96,3 +96,19 @@
   text-decoration: line-through;
   text-decoration-thickness: 0.12rem;
 }
+
+.completed-section__empty {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.38);
+  color: var(--app-color-on-surface-muted);
+  text-align: center;
+}
+
+.completed-section__empty p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}

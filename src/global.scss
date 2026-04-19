@@ -46,3 +46,55 @@ ion-modal.categories-create-modal {
 ion-modal.categories-create-modal::part(content) {
   background: #f9f9f9;
 }
+
+ion-alert.today-task-alert {
+  --background: #f9f9f9;
+  --color: #1b1b1b;
+  --button-color: #5c23cc;
+  --backdrop-opacity: 0.32;
+}
+
+ion-alert.today-task-alert .alert-wrapper {
+  border-radius: 1.35rem;
+  box-shadow: 0 18px 40px rgba(27, 27, 27, 0.18);
+}
+
+ion-alert.today-task-alert .alert-head,
+ion-alert.today-task-alert .alert-message,
+ion-alert.today-task-alert .alert-input-group,
+ion-alert.today-task-alert .alert-radio-group {
+  color: #1b1b1b;
+}
+
+ion-alert.today-task-alert .alert-title {
+  color: #1b1b1b;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+ion-alert.today-task-alert .alert-input {
+  color: #1b1b1b;
+  border-bottom-color: rgba(53, 60, 79, 0.18);
+}
+
+ion-alert.today-task-alert .alert-input::placeholder {
+  color: rgba(53, 60, 79, 0.6);
+}
+
+ion-alert.today-task-alert .alert-button {
+  color: #5c23cc;
+  font-weight: 700;
+}
+
+ion-alert.today-task-alert .alert-radio-label {
+  color: #1b1b1b;
+  font-weight: 500;
+}
+
+ion-alert.today-task-alert .alert-radio-icon {
+  border-color: rgba(92, 35, 204, 0.45);
+}
+
+ion-alert.today-task-alert .alert-radio-inner {
+  background-color: #5c23cc;
+}

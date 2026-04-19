@@ -4,89 +4,40 @@
   </div>
 
   <div class="categories-section__list">
-    <ion-card class="category-card">
-      <ion-card-content class="category-card__body">
-        <span class="category-card__icon category-card__icon--work">
-          <ion-icon name="briefcase"></ion-icon>
-        </span>
+    @for (category of categories(); track category.id) {
+      <ion-card class="category-card">
+        <ion-card-content class="category-card__body">
+          <span
+            class="category-card__icon"
+            [class]="'category-card__icon category-card__icon--' + category.color"
+          >
+            <ion-icon [name]="category.icon"></ion-icon>
+          </span>
 
-        <div class="category-card__content">
-          <h2>Trabajo</h2>
-        </div>
+          <div class="category-card__content">
+            <h2>{{ category.name }}</h2>
+            <p>{{ getCategoryTaskLabel(category.taskCount) }}</p>
+          </div>
 
-        <div class="category-card__actions">
-          <button type="button" aria-label="Editar categoria Trabajo">
-            <ion-icon name="create-outline"></ion-icon>
-          </button>
-          <button type="button" aria-label="Eliminar categoria Trabajo">
-            <ion-icon name="trash-outline"></ion-icon>
-          </button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="category-card">
-      <ion-card-content class="category-card__body">
-        <span class="category-card__icon category-card__icon--personal">
-          <ion-icon name="person"></ion-icon>
-        </span>
-
-        <div class="category-card__content">
-          <h2>Personal</h2>
-        </div>
-
-        <div class="category-card__actions">
-          <button type="button" aria-label="Editar categoria Personal">
-            <ion-icon name="create-outline"></ion-icon>
-          </button>
-          <button type="button" aria-label="Eliminar categoria Personal">
-            <ion-icon name="trash-outline"></ion-icon>
-          </button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="category-card">
-      <ion-card-content class="category-card__body">
-        <span class="category-card__icon category-card__icon--urgent">
-          <ion-icon name="warning"></ion-icon>
-        </span>
-
-        <div class="category-card__content">
-          <h2>Urgente</h2>
-        </div>
-
-        <div class="category-card__actions">
-          <button type="button" aria-label="Editar categoria Urgente">
-            <ion-icon name="create-outline"></ion-icon>
-          </button>
-          <button type="button" aria-label="Eliminar categoria Urgente">
-            <ion-icon name="trash-outline"></ion-icon>
-          </button>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="category-card">
-      <ion-card-content class="category-card__body">
-        <span class="category-card__icon category-card__icon--ideas">
-          <ion-icon name="bulb"></ion-icon>
-        </span>
-
-        <div class="category-card__content">
-          <h2>Ideas</h2>
-        </div>
-
-        <div class="category-card__actions">
-          <button type="button" aria-label="Editar categoria Ideas">
-            <ion-icon name="create-outline"></ion-icon>
-          </button>
-          <button type="button" aria-label="Eliminar categoria Ideas">
-            <ion-icon name="trash-outline"></ion-icon>
-          </button>
-        </div>
-      </ion-card-content>
-    </ion-card>
+          <div class="category-card__actions">
+            <button
+              type="button"
+              [attr.aria-label]="'Editar categoria ' + category.name"
+              (click)="openEditCategoryModal(category)"
+            >
+              <ion-icon name="create-outline"></ion-icon>
+            </button>
+            <button
+              type="button"
+              [attr.aria-label]="'Eliminar categoria ' + category.name"
+              (click)="deleteCategory(category.id)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    }
   </div>
 
   <div class="categories-section-btn">
@@ -137,53 +88,52 @@
               class="categories-modal__input"
               fill="outline"
               placeholder="Ej. Trabajo, Personal..."
+              [(ngModel)]="categoryName"
             ></ion-input>
           </div>
 
           <div class="categories-modal__group">
             <span class="categories-modal__label">Color distintivo</span>
             <div class="categories-modal__colors">
-              <button class="categories-color categories-color--selected categories-color--red" type="button" aria-label="Seleccionar color rojo"></button>
-              <button class="categories-color categories-color--orange" type="button" aria-label="Seleccionar color naranja"></button>
-              <button class="categories-color categories-color--yellow" type="button" aria-label="Seleccionar color amarillo"></button>
-              <button class="categories-color categories-color--green" type="button" aria-label="Seleccionar color verde"></button>
-              <button class="categories-color categories-color--blue" type="button" aria-label="Seleccionar color azul"></button>
-              <button class="categories-color categories-color--purple" type="button" aria-label="Seleccionar color morado"></button>
-              <button class="categories-color categories-color--pink" type="button" aria-label="Seleccionar color rosa"></button>
-              <button class="categories-color categories-color--slate" type="button" aria-label="Seleccionar color gris oscuro"></button>
+              @for (color of colorOptions; track color.id) {
+                <button
+                  class="categories-color"
+                  [class]="'categories-color categories-color--' + color.id"
+                  [class.categories-color--selected]="selectedColor === color.id"
+                  type="button"
+                  [attr.aria-label]="'Seleccionar color ' + color.label.toLowerCase()"
+                  (click)="selectColor(color.id)"
+                ></button>
+              }
             </div>
           </div>
 
           <div class="categories-modal__group">
             <span class="categories-modal__label">Icono (Opcional)</span>
             <div class="categories-modal__icons">
-              <button class="categories-icon categories-icon--active" type="button" aria-label="Seleccionar icono portafolio">
-                <ion-icon name="briefcase"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono casa">
-                <ion-icon name="home"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono estudio">
-                <ion-icon name="school"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono corazon">
-                <ion-icon name="heart"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono avion">
-                <ion-icon name="airplane"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono expandir">
-                <ion-icon name="expand"></ion-icon>
-              </button>
-              <button class="categories-icon" type="button" aria-label="Seleccionar icono carrito">
-                <ion-icon name="cart"></ion-icon>
-              </button>
+              @for (icon of iconOptions; track icon.id) {
+                <button
+                  class="categories-icon"
+                  [class.categories-icon--active]="selectedIcon === icon.id"
+                  type="button"
+                  [attr.aria-label]="'Seleccionar icono ' + icon.label.toLowerCase()"
+                  (click)="selectIcon(icon.id)"
+                >
+                  <ion-icon [name]="icon.id"></ion-icon>
+                </button>
+              }
             </div>
           </div>
 
-          <button class="categories-modal__save ion-activatable" type="button">
+          <button
+            class="categories-modal__save ion-activatable"
+            type="button"
+            (click)="saveCategory()"
+          >
             <ion-icon name="checkmark-circle"></ion-icon>
-            <span>Guardar Categoria</span>
+            <span>
+              {{ isEditingCategory ? 'Actualizar Categoria' : 'Guardar Categoria' }}
+            </span>
             <ion-ripple-effect></ion-ripple-effect>
           </button>
         </div>

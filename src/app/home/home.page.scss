@@ -8,7 +8,7 @@
 
 .home-content::part(scroll) {
   padding: 7.5rem 1rem calc(6.5rem + env(safe-area-inset-bottom));
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .home-shell {

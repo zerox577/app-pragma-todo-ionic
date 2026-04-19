@@ -9,26 +9,28 @@
 
 .shared-footer {
   background: transparent;
-  box-shadow: var(--app-shadow-ambient);
+  box-shadow: none;
 }
 
 .shared-footer ion-tab-bar {
-  --background: rgba(100, 41, 205, 0.9);
+  --background: rgba(249, 249, 249, 0.96);
   --border: 0;
   max-width: 64rem;
   margin: 0 auto;
-  padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+  padding: 0.75rem 0.85rem calc(0.75rem + env(safe-area-inset-bottom));
   border-radius: 1.25rem 1.25rem 0 0;
-  backdrop-filter: blur(16px);
+  box-shadow: 0 -6px 24px rgba(27, 27, 27, 0.08);
+  backdrop-filter: blur(14px);
 }
 
 .shared-footer ion-tab-button {
   --background: transparent;
-  --color: rgba(255, 255, 255, 0.72);
-  --color-selected: #ffffff;
-  min-height: 4.5rem;
-  border-radius: var(--app-radius-lg);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  --color: rgba(92, 35, 204, 0.72);
+  --color-selected: var(--ion-color-primary);
+  min-height: 4.35rem;
+  border-radius: 1.35rem;
+  transition: transform 0.18s ease, background-color 0.18s ease,
+    opacity 0.18s ease;
 }
 
 .shared-footer ion-tab-button.is-active {
@@ -36,15 +38,35 @@
 }
 
 .shared-footer ion-tab-button::part(native) {
-  border-top: 2px solid transparent;
+  padding: 0.55rem 0.6rem;
+  border-radius: 1.35rem;
+  border-top: 0;
 }
 
 .shared-footer ion-tab-button.tab-selected::part(native),
 .shared-footer ion-tab-button.is-active::part(native) {
-  border-top-color: var(--ion-color-primary);
+  background: #ede7fb;
+  box-shadow: inset 0 0 0 1px rgba(92, 35, 204, 0.04);
+}
+
+.shared-footer ion-tab-button:active::part(native) {
+  background: #e5ddf8;
+  transform: scale(0.97);
 }
 
 .shared-footer ion-icon,
 .shared-footer ion-label {
   color: inherit;
+}
+
+.shared-footer ion-icon {
+  font-size: 1.55rem;
+}
+
+.shared-footer ion-label {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
