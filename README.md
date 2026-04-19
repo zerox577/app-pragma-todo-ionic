@@ -55,6 +55,127 @@ npm run lint
 npm test -- --watch=false --browsers=ChromeHeadless
 ```
 
+## Preparacion para generar APK e IPA
+
+### Requisitos para Android
+
+- Node.js 20 LTS y npm
+- Android Studio
+- Android SDK instalado desde Android Studio
+- JDK compatible con el Android Gradle Plugin del proyecto
+- Variables de entorno de Android configuradas si se compila por terminal
+
+### Requisitos para iOS
+
+- Node.js 20 LTS y npm
+- Xcode actualizado
+- CocoaPods
+- Una maquina con macOS
+- Cuenta de Apple para firma si se quiere instalar en dispositivo o distribuir
+
+> Nota: aunque el proyecto puede editarse en Windows, el `.ipa` no se genera de forma nativa en Windows. Para iOS hace falta usar una Mac fisica o una VM/servicio con macOS.
+
+### Preparacion inicial del proyecto
+
+Desde la raiz de `app-pragma-todo-ionic`:
+
+```bash
+npm install
+npm run build
+npx cap sync
+```
+
+Esto instala dependencias, genera la app web en `www` y sincroniza los cambios con las carpetas nativas `android/` e `ios/`.
+
+### Generar APK en Android
+
+1. Construir la parte web:
+
+```bash
+npm run build
+```
+
+2. Sincronizar Capacitor con Android:
+
+```bash
+npx cap sync android
+```
+
+3. Abrir el proyecto nativo:
+
+```bash
+npx cap open android
+```
+
+4. Generar binarios:
+
+- Desde Android Studio:
+  - `Build > Build APK(s)` para debug
+  - `Build > Generate Signed Bundle / APK` para release firmado
+
+- Desde terminal en Windows:
+
+```bash
+cd android
+.\gradlew.bat assembleDebug
+.\gradlew.bat assembleRelease
+```
+
+Rutas habituales de salida:
+
+- Debug: `android/app/build/outputs/apk/debug/app-debug.apk`
+- Release: `android/app/build/outputs/apk/release/app-release.apk`
+
+### Generar IPA en iOS
+
+1. Construir la parte web:
+
+```bash
+npm run build
+```
+
+2. Sincronizar Capacitor con iOS:
+
+```bash
+npx cap sync ios
+```
+
+3. Abrir el proyecto en Xcode:
+
+```bash
+npx cap open ios
+```
+
+4. En Xcode:
+
+- Configurar `Signing & Capabilities`
+- Seleccionar team y certificado
+- Elegir un dispositivo o archivo de distribucion
+- Usar `Product > Archive`
+- Exportar el `.ipa` desde el Organizer
+
+### Flujo recomendado cuando hay cambios
+
+Cada vez que cambies codigo en `src/`:
+
+```bash
+npm run build
+npx cap sync
+```
+
+Si solo vas a probar Android o iOS, puedes sincronizar una sola plataforma:
+
+```bash
+npx cap sync android
+npx cap sync ios
+```
+
+### Notas utiles
+
+- El proyecto ya incluye las carpetas `android/` e `ios/`, asi que no hace falta volver a ejecutar `npx cap add android` o `npx cap add ios`.
+- Para generar un `.ipa` real, el paso limitante casi siempre es la firma y el acceso a macOS.
+- Si el build web falla, primero corrige eso antes de abrir Android Studio o Xcode.
+
 ## Estructura base
 
 ```text
